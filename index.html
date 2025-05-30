@@ -111,18 +111,18 @@
             <form id="confirmation-form" class="space-y-6">
                 <div>
                     <label for="name" class="block text-sm font-medium text-rust mb-1 uppercase tracking-wider">Seu nome completo</label>
-                    <input type="text" id="name" name="entry.1234567890" required class="input-field w-full px-4 py-3 rounded-sm text-gray-800 focus:outline-none">
+                    <input type="text" id="name" name="entry.710922304" required class="input-field w-full px-4 py-3 rounded-sm text-gray-800 focus:outline-none">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-rust mb-3 uppercase tracking-wider">Você vai comparecer?</label>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <label class="flex items-center p-4 border border-cream bg-white rounded-sm cursor-pointer hover:bg-cream/20 transition-colors">
-                            <input type="radio" name="entry.1234567893" value="Sim" required class="h-5 w-5 text-rust focus:ring-rust/50">
+                            <input type="radio" name="entry.1650772872" value="Sim" required class="h-5 w-5 text-rust focus:ring-rust/50">
                             <span class="ml-2 text-gray-800">Sim, vou comparecer</span>
                         </label>
                         <label class="flex items-center p-4 border border-cream bg-white rounded-sm cursor-pointer hover:bg-cream/20 transition-colors">
-                            <input type="radio" name="entry.1234567893" value="Não" required class="h-5 w-5 text-rust focus:ring-rust/50">
+                            <input type="radio" name="entry.1650772872" value="Não" required class="h-5 w-5 text-rust focus:ring-rust/50">
                             <span class="ml-2 text-gray-800">Não poderei</span>
                         </label>
                     </div>
@@ -133,11 +133,11 @@
                         <label class="block text-sm font-medium text-rust mb-3 uppercase tracking-wider">Vai levar acompanhante?</label>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <label class="flex items-center p-4 border border-cream bg-white rounded-sm cursor-pointer hover:bg-cream/20 transition-colors">
-                                <input type="radio" name="entry.1234567894" value="Sim" class="h-5 w-5 text-rust focus:ring-rust/50 companion-radio">
+                                <input type="radio" name="entry.1205085701" value="Sim" class="h-5 w-5 text-rust focus:ring-rust/50 companion-radio">
                                 <span class="ml-2 text-gray-800">Sim</span>
                             </label>
                             <label class="flex items-center p-4 border border-cream bg-white rounded-sm cursor-pointer hover:bg-cream/20 transition-colors">
-                                <input type="radio" name="entry.1234567894" value="Não" class="h-5 w-5 text-rust focus:ring-rust/50 companion-radio">
+                                <input type="radio" name="entry.1205085701" value="Não" class="h-5 w-5 text-rust focus:ring-rust/50 companion-radio">
                                 <span class="ml-2 text-gray-800">Não</span>
                             </label>
                         </div>
@@ -145,7 +145,7 @@
                     
                     <div id="companion-name-section" class="hidden">
                         <label for="companion-name" class="block text-sm font-medium text-rust mb-1 uppercase tracking-wider">Nome do acompanhante</label>
-                        <input type="text" id="companion-name" name="entry.1234567895" class="input-field w-full px-4 py-3 rounded-sm text-gray-800 focus:outline-none">
+                        <input type="text" id="companion-name" name="entry.358317778" class="input-field w-full px-4 py-3 rounded-sm text-gray-800 focus:outline-none">
                     </div>
                 </div>
                 
@@ -264,7 +264,7 @@
             const attendance = document.querySelector('input[name="entry.1234567893"]:checked').value;
             
             // Enviar dados para o Google Forms
-            fetch('https://docs.google.com/forms/u/0/d/e/YOUR_FORM_ID_HERE/formResponse', {
+            fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdD-7sBnYDh_JfUUNtNOHjrE8dUMtOFFWfMFLBiYilI44ak4w/formResponse', {
                 method: 'POST',
                 mode: 'no-cors', // Importante: o Google Forms requer no-cors
                 body: formData
