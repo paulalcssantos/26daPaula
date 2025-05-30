@@ -212,7 +212,7 @@
         // Controle de exibição da seção de acompanhantes
         attendanceRadios.forEach(radio => {
             radio.addEventListener('change', function() {
-                if (this.value === 'Sim') {
+                if (this.value === 'Sim, vou comparecer') {
                     guestsSection.classList.remove('hidden');
                     // Resetar seleção de acompanhante quando mostrar a seção
                     companionRadios.forEach(compRadio => compRadio.checked = false); // Renomeei 'radio' para 'compRadio' para evitar conflito de escopo
