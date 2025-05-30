@@ -203,29 +203,31 @@
 
     <script>
         // Mostrar/ocultar campos adicionais com base na resposta
-        const attendanceRadios = document.querySelectorAll('input[name="entry.1234567893"]');
+        const attendanceRadios = document.querySelectorAll('input[name="entry.1650772872"]'); // <<< CORRIGIDO AQUI
         const guestsSection = document.getElementById('guests-section');
-        const companionRadios = document.querySelectorAll('.companion-radio');
+        const companionRadios = document.querySelectorAll('.companion-radio'); // Este usa classe, então deve estar OK
         const companionNameSection = document.getElementById('companion-name-section');
         const companionNameInput = document.getElementById('companion-name');
-        
+
         // Controle de exibição da seção de acompanhantes
         attendanceRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 if (this.value === 'Sim') {
                     guestsSection.classList.remove('hidden');
                     // Resetar seleção de acompanhante quando mostrar a seção
-                    companionRadios.forEach(radio => radio.checked = false);
+                    companionRadios.forEach(compRadio => compRadio.checked = false); // Renomeei 'radio' para 'compRadio' para evitar conflito de escopo
                     companionNameSection.classList.add('hidden');
                     companionNameInput.required = false;
+                    companionNameInput.value = ''; // Limpar valor caso tenha sido preenchido antes
                 } else {
                     guestsSection.classList.add('hidden');
                     companionNameSection.classList.add('hidden');
                     companionNameInput.required = false;
+                    companionNameInput.value = ''; // Limpar valor
                 }
             });
         });
-        
+
         // Controle de exibição do campo de nome do acompanhante
         companionRadios.forEach(radio => {
             radio.addEventListener('change', function() {
@@ -239,7 +241,7 @@
                 }
             });
         });
-        
+
         // Manipulação do formulário
         const form = document.getElementById('confirmation-form');
         const submitButton = document.getElementById('submit-button');
@@ -249,20 +251,20 @@
         const confirmationMessage = document.getElementById('confirmation-message');
         const backButton = document.getElementById('back-button');
         const errorBackButton = document.getElementById('error-back-button');
-        
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Mostrar indicador de carregamento
             const originalButtonText = submitButton.innerHTML;
             submitButton.innerHTML = '<span class="loading"></span> Enviando...';
             submitButton.disabled = true;
-            
+
             // Obter dados do formulário
             const formData = new FormData(form);
-            const name = document.getElementById('name').value;
-            const attendance = document.querySelector('input[name="entry.1234567893"]:checked').value;
-            
+            const nameValue = document.getElementById('name').value; // Renomeei para nameValue para não conflitar com o 'name' do input
+            const attendanceValue = document.querySelector('input[name="entry.1650772872"]:checked').value; // <<< CORRIGIDO AQUI e renomeado para attendanceValue
+
             // Enviar dados para o Google Forms
             fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdD-7sBnYDh_JfUUNtNOHjrE8dUMtOFFWfMFLBiYilI44ak4w/formResponse', {
                 method: 'POST',
@@ -271,53 +273,63 @@
             })
             .then(() => {
                 // Mostrar mensagem de confirmação personalizada
-                if (attendance === 'Sim') {
-                    confirmationMessage.textContent = `${name}, sua presença foi confirmada! A Paula está ansiosa para celebrar com você.`;
+                if (attendanceValue === 'Sim') { // Usar attendanceValue
+                    confirmationMessage.textContent = `${nameValue}, sua presença foi confirmada! A Paula está ansiosa para celebrar com você.`;
                     createConfetti();
                 } else {
-                    confirmationMessage.textContent = `${name}, agradecemos por nos informar. A Paula sentirá sua falta!`;
+                    confirmationMessage.textContent = `${nameValue}, agradecemos por nos informar. A Paula sentirá sua falta!`;
                 }
-                
+
                 // Mostrar tela de confirmação
                 rsvpForm.classList.add('hidden');
                 confirmationSuccess.classList.remove('hidden');
                 errorMessage.classList.add('hidden');
-                
+
                 // Resetar botão
                 submitButton.innerHTML = originalButtonText;
                 submitButton.disabled = false;
             })
             .catch(error => {
                 console.error('Erro:', error);
-                
+
                 // Mostrar mensagem de erro
                 rsvpForm.classList.add('hidden');
                 confirmationSuccess.classList.add('hidden');
                 errorMessage.classList.remove('hidden');
-                
+
                 // Resetar botão
                 submitButton.innerHTML = originalButtonText;
                 submitButton.disabled = false;
             });
         });
-        
+
         // Botões para voltar ao formulário
         backButton.addEventListener('click', function() {
             confirmationSuccess.classList.add('hidden');
             rsvpForm.classList.remove('hidden');
             form.reset();
+            // Resetar também os campos condicionais para o estado inicial
+            guestsSection.classList.add('hidden');
+            companionNameSection.classList.add('hidden');
+            companionNameInput.required = false;
+            companionNameInput.value = '';
+            // Garante que os radios de comparecimento também sejam desmarcados pelo reset
+            // e a lógica de ocultar a seção de acompanhantes seja reavaliada se necessário
+            // (o form.reset() deve desmarcar os radios, e a lógica de 'change' nos attendanceRadios
+            // não será disparada automaticamente, então o estado inicial de hidden é o correto aqui)
         });
-        
+
         errorBackButton.addEventListener('click', function() {
             errorMessage.classList.add('hidden');
             rsvpForm.classList.remove('hidden');
+            // Não precisa de form.reset() aqui, pois o usuário pode querer tentar enviar os mesmos dados
         });
-        
+
         // Função para criar confetes (apenas quando confirma presença)
         function createConfetti() {
             const colors = ['#c23021', '#e8e3d0', '#d97706', '#a78bfa', '#f9a8d4'];
             const confettiContainer = document.body;
-            
+
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -325,7 +337,7 @@
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.animation = `float ${Math.random() * 3 + 2}s linear forwards`;
                 confetti.style.animationDelay = Math.random() * 2 + 's';
-                
+
                 // Formas variadas
                 if (Math.random() > 0.5) {
                     confetti.style.borderRadius = '50%';
@@ -334,9 +346,9 @@
                     confetti.style.height = '14px';
                     confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                 }
-                
+
                 confettiContainer.appendChild(confetti);
-                
+
                 // Remover confete após a animação
                 setTimeout(() => {
                     confetti.remove();
